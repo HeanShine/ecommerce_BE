@@ -5,6 +5,7 @@ import com.example.ecommerce.model.OrderDetail;
 import com.example.ecommerce.model.Orders;
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.model.dto.OrderDetailResponse;
+import com.example.ecommerce.model.dto.RevenueRes;
 import com.example.ecommerce.repository.OderDetailRepo;
 import com.example.ecommerce.repository.OderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,5 +101,21 @@ public class OderServiceImpl {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account accountLogin = accountService.findByUsername(userDetails.getUsername());
         return oderRepo.findOderByAccount(accountLogin.getId());
+    }
+
+    public double getRevenueByMonthAndWeek(int month, int week) {
+        return oderRepo.getRevenueByMonthAndWeek(month, week);
+    }
+
+    public List<RevenueRes> getRevenueByYear(int dateTime) {
+        List<Object[]> list = oderRepo.getRevenueByYear(dateTime);
+        List<RevenueRes> revenueResList = new java.util.ArrayList<>();
+        for (Object[] objects : list) {
+            RevenueRes revenueRes = new RevenueRes();
+            revenueRes.setMonth((int) objects[0]);
+            revenueRes.setTotal((double) objects[1]);
+            revenueResList.add(revenueRes);
+        }
+        return revenueResList;
     }
 }

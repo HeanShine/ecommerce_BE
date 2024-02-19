@@ -28,4 +28,16 @@ public class OrderController {
         }
         return new ResponseEntity<>(oderService.findOderByAccount(), HttpStatus.OK);
     }
+
+    @GetMapping("/getRevenueByMonthAndWeek")
+    public ResponseEntity<Double> getRevenueByMonthAndWeek
+            (@RequestParam("month") int month,
+             @RequestParam("week") int week) {
+        return new ResponseEntity<>(oderService.getRevenueByMonthAndWeek(month, week), HttpStatus.OK);
+    }
+
+    @GetMapping("/getRevenueByYear")
+    public ResponseEntity<?> getRevenueByYear(@RequestParam("year") int year) {
+        return new ResponseEntity<>(oderService.getRevenueByYear(year), HttpStatus.OK);
+    }
 }

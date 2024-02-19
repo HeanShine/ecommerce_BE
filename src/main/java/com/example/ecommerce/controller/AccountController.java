@@ -80,7 +80,7 @@ public class AccountController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account1 = accountService.findByUsername(userDetails.getUsername());
 
-       if (account.getAvatar() != null) {
+        if (account.getAvatar() != null) {
             account1.setAvatar(account.getAvatar());
         }
         if (account.getApartmentNumber() != null) {
@@ -106,5 +106,33 @@ public class AccountController {
         }
         Iterable<Account> accounts = accountService.findAll();
         return new ResponseEntity<>((List<Account>) accounts, HttpStatus.OK);
+    }
+
+    @GetMapping("/removeAccount/{id}")
+    public ResponseEntity<Account> removeAccount(@PathVariable int id) {
+        Account account = accountService.findById(id);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        accountService.deleteById(id);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAccount/{id}")
+    public ResponseEntity<Account> getAccount(@PathVariable int id) {
+        Account account = accountService.findById(id);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAccountByUsername")
+    public ResponseEntity<List<Account>> getAccountByUsername(@RequestParam("username") String username) {
+        List<Account> accounts = accountService.findByUserName(username);
+        if (accounts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 }

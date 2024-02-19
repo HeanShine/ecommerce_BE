@@ -63,4 +63,16 @@ public class AccountServiceImpl implements UserDetailsService {
     public void save(Account account) {
         iAccountRepo.save(account);
     }
+
+    public Account findById(int id) {
+        return iAccountRepo.findById(id).get();
+    }
+
+    public void deleteById(int id) {
+        iAccountRepo.deleteById(id);
+    }
+
+    public List<Account> findByUserName(String username) {
+        return iAccountRepo.findByUserName(username);
+    }
 }

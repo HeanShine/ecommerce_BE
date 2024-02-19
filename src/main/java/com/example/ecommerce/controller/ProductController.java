@@ -3,6 +3,7 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.model.dto.ProductResponse;
 import com.example.ecommerce.service.impl.ProductServiceImpl;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -100,7 +101,11 @@ public class ProductController {
 
     @PostMapping("/updateProduct/{idProduct}")
     public ResponseEntity<String> updateProduct(@RequestBody Product product, @PathVariable int idProduct) {
-        productService.editProduct(product, idProduct);
+       Product productEdit = productService.findProductByIdProduct(idProduct);
+       if (productEdit == null) {
+           return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+       }
+         productService.updateProduct(product);
         return new ResponseEntity<>("Update product successfully", HttpStatus.OK);
     }
 

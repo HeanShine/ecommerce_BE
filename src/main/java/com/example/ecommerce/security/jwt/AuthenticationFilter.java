@@ -18,12 +18,6 @@ import java.io.IOException;
 
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
-    // dung de filter request cua client gui len server,
-    // kiem tra xem co token hay khong,
-    // neu co thi kiem tra token co hop le hay khong,
-    // neu hop le thi set user vao security context  de su dung cho cac request tiep theo
-    // (neu khong thi tra ve loi 401)
-
     @Autowired
     private TokenService tokenService;
 

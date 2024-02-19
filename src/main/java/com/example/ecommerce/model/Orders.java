@@ -28,6 +28,10 @@ public class Orders {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
     public int getMonthFromTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.datetime);
